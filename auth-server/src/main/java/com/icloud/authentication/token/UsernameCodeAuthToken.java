@@ -1,6 +1,6 @@
 package com.icloud.authentication.token;
 
-import com.icloud.model.TokenLoginRequestModel;
+import org.icloud.model.TokenLoginRequestModel;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 public class UsernameCodeAuthToken extends UsernamePasswordAuthenticationToken {

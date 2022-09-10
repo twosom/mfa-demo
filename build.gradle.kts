@@ -39,8 +39,10 @@ subprojects {
 
     dependencies {
         implementation(kotlin("stdlib-jdk8"))
-        implementation("org.springframework.boot:spring-boot-starter-web")
-        testImplementation("org.springframework.boot:spring-boot-starter-test")
+        if (project.name !== "common-module") {
+            implementation("org.springframework.boot:spring-boot-starter-web")
+            testImplementation("org.springframework.boot:spring-boot-starter-test")
+        }
     }
 
     val compileKotlin: KotlinCompile by tasks
@@ -60,5 +62,11 @@ project(":auth-server") {
         implementation("org.springframework.boot:spring-boot-starter-security")
         implementation("org.springframework.boot:spring-boot-starter-data-jpa")
         implementation("mysql:mysql-connector-java:8.0.30")
+    }
+}
+
+project(":business-server") {
+    dependencies {
+        implementation("io.github.openfeign:feign-core:11.9.1")
     }
 }

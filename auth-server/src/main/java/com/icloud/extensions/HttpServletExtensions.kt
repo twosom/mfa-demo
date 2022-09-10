@@ -2,8 +2,8 @@ package com.icloud.extensions
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.icloud.exception.CannotParseAuthRequestException
-import com.icloud.model.TokenLoginRequestModel
-import com.icloud.model.UserLoginRequestModel
+import org.icloud.model.TokenLoginRequestModel
+import org.icloud.model.UserLoginRequestModel
 import javax.servlet.http.HttpServletRequest
 
 fun HttpServletRequest.getUserLoginRequest(objectMapper: ObjectMapper): UserLoginRequestModel {

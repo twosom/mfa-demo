@@ -18,7 +18,7 @@ public class OtpService {
     }
 
 
-    public void renewOtp(Authentication authentication) {
+    public String renewOtp(Authentication authentication) {
         String code = GenerateCodeUtil.generateCode();
         Object principal = authentication.getPrincipal();
         if (principal instanceof DefaultUserDetails defaultUserDetails) {
@@ -31,5 +31,6 @@ public class OtpService {
                         otpRepository.save(otp);
                     });
         }
+        return code;
     }
 }
