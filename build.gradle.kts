@@ -12,7 +12,7 @@ val jar: Jar by tasks
 val bootJar: BootJar by tasks
 
 bootJar.enabled = false
-jar.enabled = true
+jar.enabled = false
 
 repositories {
     mavenCentral()
@@ -67,6 +67,8 @@ project(":auth-server") {
 
 project(":business-server") {
     dependencies {
+        implementation("io.github.openfeign:feign-gson:11.9.1")
         implementation("io.github.openfeign:feign-core:11.9.1")
+        implementation("org.springframework.boot:spring-boot-starter-security")
     }
 }

@@ -17,7 +17,6 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 
     public UserLoginSuccessHandler(OtpService otpService) {
         this.otpService = otpService;
-
     }
 
     @Override
@@ -25,8 +24,7 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         //TODO response 에 OTP 코드를 넣을 지 고민 필요
-        String code = otpService.renewOtp(authentication);
+        otpService.renewOtp(authentication);
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().write(code);
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Component
 
 @Component
-class UsernameTokenAuthenticationProvider(
+class OtpAuthenticationProvider(
     private val otpRepository: OtpRepository
 ) : AuthenticationProvider {
 

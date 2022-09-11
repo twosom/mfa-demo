@@ -1,11 +1,11 @@
 package com.icloud.configuration;
 
-import com.icloud.authentication.filter.TokenLoginFilter;
+import com.icloud.authentication.filter.OtpLoginFilter;
 import com.icloud.authentication.filter.UserLoginFilter;
-import com.icloud.authentication.handler.TokenLoginSuccessHandler;
+import com.icloud.authentication.handler.OtpLoginSuccessHandler;
 import com.icloud.authentication.handler.UserLoginSuccessHandler;
 import com.icloud.authentication.provider.UsernamePasswordAuthenticationProvider;
-import com.icloud.authentication.provider.UsernameTokenAuthenticationProvider;
+import com.icloud.authentication.provider.OtpAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,18 +16,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider;
-    private final UsernameTokenAuthenticationProvider usernameTokenAuthenticationProvider;
+    private final OtpAuthenticationProvider otpAuthenticationProvider;
     private final UserLoginSuccessHandler userLoginSuccessHandler;
-    private final TokenLoginSuccessHandler tokenLoginSuccessHandler;
+    private final OtpLoginSuccessHandler otpLoginSuccessHandler;
 
     public SecurityConfig(UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider,
-                          UsernameTokenAuthenticationProvider usernameTokenAuthenticationProvider,
+                          OtpAuthenticationProvider otpAuthenticationProvider,
                           UserLoginSuccessHandler userLoginSuccessHandler,
-                          TokenLoginSuccessHandler tokenLoginSuccessHandler) {
+                          OtpLoginSuccessHandler otpLoginSuccessHandler) {
         this.usernamePasswordAuthenticationProvider = usernamePasswordAuthenticationProvider;
-        this.usernameTokenAuthenticationProvider = usernameTokenAuthenticationProvider;
+        this.otpAuthenticationProvider = otpAuthenticationProvider;
         this.userLoginSuccessHandler = userLoginSuccessHandler;
-        this.tokenLoginSuccessHandler = tokenLoginSuccessHandler;
+        this.otpLoginSuccessHandler = otpLoginSuccessHandler;
     }
 
 
@@ -48,15 +48,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //http.addFilterBefore(customRequestFilter, DisableEncodeUrlFilter.class);
 
         UserLoginFilter userLoginFilter = createUserLoginFilter();
-        TokenLoginFilter tokenLoginFilter = createTokenLoginFilter();
+        OtpLoginFilter otpLoginFilter = createTokenLoginFilter();
         http.addFilterAt(userLoginFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilterAfter(tokenLoginFilter, UserLoginFilter.class);
+        http.addFilterAfter(otpLoginFilter, UserLoginFilter.class);
     }
 
-    private TokenLoginFilter createTokenLoginFilter() throws Exception {
-        var filter = new TokenLoginFilter("/auth/token");
+    private OtpLoginFilter createTokenLoginFilter() throws Exception {
+        var filter = new OtpLoginFilter("/auth/otp");
         filter.setAuthenticationManager(authenticationManager());
-        filter.setAuthenticationSuccessHandler(tokenLoginSuccessHandler);
+        filter.setAuthenticationSuccessHandler(otpLoginSuccessHandler);
         return filter;
     }
 
@@ -70,6 +70,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(usernamePasswordAuthenticationProvider)
-                .authenticationProvider(usernameTokenAuthenticationProvider);
+                .authenticationProvider(otpAuthenticationProvider);
     }
 }

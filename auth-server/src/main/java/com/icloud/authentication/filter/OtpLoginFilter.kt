@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 //TODO auth/token
-class TokenLoginFilter(filterProcessingUrl: String) : AbstractUserAndTokenLoginFilter(filterProcessingUrl) {
+class OtpLoginFilter(filterProcessingUrl: String) : AbstractUserAndTokenLoginFilter(filterProcessingUrl) {
 
 
     override fun attemptAuthentication(

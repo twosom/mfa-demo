@@ -42,4 +42,8 @@ public class Otp {
     public String getCode() {
         return code;
     }
+
+    public void validateSucceed() {
+        this.validated = true;
+    }
 }

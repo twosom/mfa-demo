@@ -8,7 +8,10 @@ import com.icloud.util.GenerateCodeUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public class OtpService {
 
     private final OtpRepository otpRepository;
@@ -18,7 +21,7 @@ public class OtpService {
     }
 
 
-    public String renewOtp(Authentication authentication) {
+    public void renewOtp(Authentication authentication) {
         String code = GenerateCodeUtil.generateCode();
         Object principal = authentication.getPrincipal();
         if (principal instanceof DefaultUserDetails defaultUserDetails) {
@@ -31,6 +34,13 @@ public class OtpService {
                         otpRepository.save(otp);
                     });
         }
-        return code;
+    }
+
+
+    public void updateSucceedOtp(String username) {
+        otpRepository.findAvailableOtpByUsername(username)
+                .ifPresentOrElse(Otp::validateSucceed, () -> {
+                    System.out.println("Something was wrong.");
+                });
     }
 }
